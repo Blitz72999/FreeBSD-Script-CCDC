@@ -1,0 +1,39 @@
+#!/bin/sh
+
+uname -a
+ps aux
+service -l
+ifconfig -a
+sockstat -l
+pkg info
+w 
+last -w
+netstat -rn
+nmap -sV -sS -v
+nmap -sV -sU -v 
+nmap -p 1-65535 -sV -sS -vv -T1
+nmap -p 1-65535 -sV -sU -vv -T1
+
+name=script_report
+if [[ -e $name.txt ]] ; then
+  i=0
+  while [[ -e $name-$i.txt ]] ; do
+    let i++
+  done
+  name=$name-$i
+fi
+touch "$name".txt
+
+uname -a > "$name".txt
+ps aux  >> "$name".txt
+service -l  >> "$name".txt
+ifconfig -a  >> "$name".txt
+sockstat -l  >> "$name".txt
+pkg info  >> "$name".txt
+w  >> "$name".txt
+last -w  >> "$name".txt
+netstat -rn  >> "$name".txt
+nmap -sV -sS -v >> "$name".txt
+nmap -sV -sU -v >> "$name".txt
+nmap -p 1-65535 -sV -sS -vv -T1 >> "$name".txt
+nmap -p 1-65535 -sV -sU -vv -T1 >> "$name".txt
